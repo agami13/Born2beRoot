@@ -15,7 +15,7 @@ if [ "lsblk | grep 'LVM' | wc -l" ]; then
 else
 	lvma="no"
 fi
-acon=$(ss -t -a state established | wc -l)
+acon=$(ss -s | awk 'NR==2 {print $4}' | tr -d ',')
 unum=$(who --count | grep 'users' | tr '=' ' ' | awk '{print $3}')
 ipv4=$(hostname -I)
 MAC=$(ip link show | grep ether | awk '{print $2}')
@@ -34,3 +34,4 @@ wall 	"
 	#Network	 : IP $ipv4($MAC)
 	#Sudo		 : $scom cmd
 	"
+
